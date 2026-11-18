@@ -1,0 +1,80 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: fileUpload.spec.js >> multiple file upload
+- Location: tests\fileUpload.spec.js:20:5
+
+# Error details
+
+```
+Error: page.goto: Target page, context or browser has been closed
+Call log:
+  - navigating to "https://testautomationpractice.blogspot.com/", waiting until "load"
+
+```
+
+# Test source
+
+```ts
+  1  | 
+  2  | 
+  3  | import {test, expect} from "@playwright/test"
+  4  | 
+  5  | test ("file upload", async({page})=>{
+  6  |  await page.goto ("https://testautomationpractice.blogspot.com/")
+  7  | 
+  8  |  await page.locator('//input[@id="singleFileInput"]').setInputFiles("C:/Users/91956/Desktop/name.txt")
+  9  | 
+  10 |  await page.locator('//button[text()="Upload Single File"]').click()
+  11 | 
+  12 |  await expect(page.locator('//p[@id="singleFileStatus"]')).toContainText('Single file selected: name.txt')
+  13 | 
+  14 | //  await page.pause()
+  15 | 
+  16 | 
+  17 | })
+  18 | 
+  19 | 
+  20 | test ("multiple file upload", async({page})=>{
+> 21 |  await page.goto ("https://testautomationpractice.blogspot.com/")
+     |             ^ Error: page.goto: Target page, context or browser has been closed
+  22 | -
+  23 |  await page.locator('//input[@id="multipleFilesInput"]').setInputFiles(["C:/Users/91956/Desktop/name.txt", "C:/Users/91956/Desktop/Releving reason.txt"])
+  24 | 
+  25 |  await page.locator('//button[text()="Upload Multiple Files"]').click()
+  26 | 
+  27 |  await expect(page.locator('//p[@id="multipleFilesStatus"]')).toContainText('Multiple files selected:')
+  28 | 
+  29 | //  await page.pause()
+  30 | 
+  31 |  //unable to remove 1 file from uploded files. If we want to remove 2 files to replace the other 2 files instead of them.
+  32 |  // Or else remove both files
+  33 | 
+  34 |  await page.locator('//input[@id="multipleFilesInput"]').setInputFiles([])
+  35 | 
+  36 | //  await page.pause()
+  37 | 
+  38 | 
+  39 | })
+  40 | 
+  41 | 
+  42 | test ("file download", async ({page})=>{
+  43 | 
+  44 |     await page.goto("https://demo.automationtesting.in/FileDownload.html")
+  45 | 
+  46 |     const [downloadedfile]=await Promise.all([
+  47 |     page.waitForEvent('download'),
+  48 |     page.locator('//a[text()="Download" and @type="button"]').click()
+  49 | ])
+  50 | 
+  51 | const file="D:/Playwright/download/samplefile.pdf"
+  52 | await downloadedfile.saveAs(file)
+  53 | // await page.pause()
+  54 | 
+  55 | })
+```

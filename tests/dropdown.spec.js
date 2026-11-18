@@ -7,8 +7,8 @@
 //     await page.locator('//select[@id="country"]').selectOption({value:"india"})
 //     await page.locator('//select[@id="country"]').selectOption({index:4})
 
-       const text=await page.locator('//select[@id="country"]').textContent() //inner text  //alttext
-       console.log(text);
+    //    const text=await page.locator('//select[@id="country"]').textContent() //inner text  //alttext
+    //    console.log(text);
 
 
 
